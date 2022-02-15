@@ -12,7 +12,7 @@ if dev is None:
 else:
     print('SpaceMouse Pro found')
     print(dev)
- 
+
 # Don't need all this but may want it for a full implementation
 cfg = dev.get_active_configuration()
 print('cfg is ', cfg)
@@ -35,18 +35,19 @@ print('')
 
 # saving data to csv file
 filename = "mouse_log.csv"
-        
+
 # Create header row in new CSV file
 csv = open(filename, 'w')
 csv.write("Timestamp,Tx,Ty,Tz,Rx,Ry,Rz\n")
-csv.close
+csv.close()
+csv = open(filename, 'a')
 
 run = True
 while run:
     try:
       # read raw data from the mouse
         data = dev.read(ep_in.bEndpointAddress, 13, 0)
-        
+
       # when there is input from user
         if data[0] == 1:
             # translation packet
@@ -70,18 +71,14 @@ while run:
             if data[12] > 127:
                 rz -= 65536
             print(" T: ",tx,ty,tz," R: ", rx, ry, rz)
-            
+
             # Construct CSV entry from timestamp and mouse reading
             waktu = str(datetime.datetime.now())
             data_to_log = waktu + "," + tx + "," + ty + "," + tz + "," + rx + "," + ry + "," + rz+ "\n"
-        
+
             # Log (append) entry into file
-            csv = open(filename, 'a')
-            try:
-                csv.write(data_to_log)
-            finally:
-                csv.close()
-                
+            csv.write(data_to_log)
+
         if data[0] == 3 and data[1] == 0:
             # button packet - exit on the release
             run = False
@@ -95,8 +92,9 @@ usb.util.dispose_resources(dev)
 
 if reattach:
     dev.attach_kernel_driver(0)
-    
+
 # show the csv and close it
+csv.close()
 csv = open(filename, 'r')
 print(csv.read())
 csv.close()
