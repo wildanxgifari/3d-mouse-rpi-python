@@ -71,10 +71,11 @@ while run:
             if data[12] > 127:
                 rz -= 65536
             print(" T: ",tx,ty,tz," R: ", rx, ry, rz)
-            print(type(tx))
+            
             # Construct CSV entry from timestamp and mouse reading
             waktu = str(datetime.datetime.now())
-            data_to_log = waktu + "," + tx + "," + ty + "," + tz + "," + rx + "," + ry + "," + rz+ "\n"
+            data_to_log = waktu + "," + str(tx) + "," + str(ty) + "," + str(tz) + "," + str(rx) + "," + str(ry) + "," + str(rz) + "\n"
+            print(data_to_log)
             
             # Log (append) entry into file
             csv.write(data_to_log)
