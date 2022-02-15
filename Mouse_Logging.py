@@ -33,6 +33,14 @@ print('')
 print('Exit by pressing any button on the SpaceMouse Pro')
 print('')
 
+# saving data to csv file
+filename = "mouse_log.csv"
+        
+# Create header row in new CSV file
+csv = open(filename, 'w')
+csv.write("Timestamp,Tx,Ty,Tz,Rx,Ry,Rz\n")
+csv.close
+
 run = True
 while run:
     try:
@@ -65,6 +73,17 @@ while run:
         if data[0] == 3 and data[1] == 0:
             # button packet - exit on the release
             run = False
+        
+        # Construct CSV entry from timestamp and mouse reading
+        waktu = str(datetime.datetime.now())
+        data_to_log = waktu + "," + tx + "," + ty + "," + tz + "," + rx + "," + ry + "," + rz+ "\n"
+        
+        # Log (append) entry into file
+        csv = open(filename, 'a')
+        try:
+            csv.write(data_to_log)
+        finally:
+            csv.close()
 
     except usb.core.USBError:
         print("USB error")
@@ -75,7 +94,9 @@ usb.util.dispose_resources(dev)
 
 if reattach:
     dev.attach_kernel_driver(0)
-© 2022 GitHub, Inc.
-Terms
-Pri
+    
+# show the csv and close it
+csv = open(filename, 'r')
+print(csv.read())
+csv.close()
 
