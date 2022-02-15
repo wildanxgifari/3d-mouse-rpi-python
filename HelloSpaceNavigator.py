@@ -9,11 +9,10 @@ import time
 # Look for SpaceNavigator
 dev = usb.core.find(idVendor=0x256f, idProduct=0xc631)
 if dev is None:
-    raise ValueError('SpaceNavigator not found');
+    raise ValueError('SpaceMouse Pro not found');
 else:
-    print('SpaceNavigator found')
+    print('SpaceMouse Pro found')
     print(dev)
-
 
 # Don't need all this but may want it for a full implementation
 
@@ -33,7 +32,7 @@ ep_in = dev[0][(0,0)][0]
 ep_out = dev[0][(0,0)][1]
 
 print('')
-print('Exit by pressing any button on the SpaceNavigator')
+print('Exit by pressing any button on the SpaceMouse Pro')
 print('')
 #print(ep_in.bLength)
 
