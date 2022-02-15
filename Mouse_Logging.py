@@ -1,5 +1,5 @@
 import time
-import datetime
+from datetime import datetime
 import usb.core
 import usb.util
 import sys
