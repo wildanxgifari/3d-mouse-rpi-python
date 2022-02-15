@@ -70,20 +70,21 @@ while run:
             if data[12] > 127:
                 rz -= 65536
             print(" T: ",tx,ty,tz," R: ", rx, ry, rz)
+            
+            # Construct CSV entry from timestamp and mouse reading
+            waktu = str(datetime.datetime.now())
+            data_to_log = waktu + "," + tx + "," + ty + "," + tz + "," + rx + "," + ry + "," + rz+ "\n"
+        
+            # Log (append) entry into file
+            csv = open(filename, 'a')
+            try:
+                csv.write(data_to_log)
+            finally:
+                csv.close()
+                
         if data[0] == 3 and data[1] == 0:
             # button packet - exit on the release
             run = False
-        
-        # Construct CSV entry from timestamp and mouse reading
-        waktu = str(datetime.datetime.now())
-        data_to_log = waktu + "," + tx + "," + ty + "," + tz + "," + rx + "," + ry + "," + rz+ "\n"
-        
-        # Log (append) entry into file
-        csv = open(filename, 'a')
-        try:
-            csv.write(data_to_log)
-        finally:
-            csv.close()
 
     except usb.core.USBError:
         print("USB error")
