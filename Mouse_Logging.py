@@ -35,8 +35,8 @@ print('Exit by pressing any button on the SpaceMouse Pro')
 print('')
 
 # saving data to csv file in specific directory
-filename = "forward_plusy_1.csv"
-savepath = '/home/pi/mouse_3d/space_mouse_data'
+file_name = "forward_plusy_1.csv"
+save_path = '/home/pi/mouse_3d/space_mouse_data'
 Dir_and_Name = os.path.join(save_path, file_name)
 
 # Create header row in new CSV file
