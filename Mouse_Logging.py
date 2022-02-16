@@ -78,7 +78,7 @@ while run:
             # Construct CSV entry from timestamp and mouse reading
             waktu = str(time.time())
             data_to_log = waktu + "," + str(tx) + "," + str(ty) + "," + str(tz) + "," + str(rx) + "," + str(ry) + "," + str(rz) + "\n"
-            print(data_to_log)
+            # print(data_to_log)
             
             # Log (append) entry into file
             csv.write(data_to_log)
