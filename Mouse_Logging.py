@@ -3,6 +3,7 @@ from datetime import datetime
 import usb.core
 import usb.util
 import sys
+import os
 from time import gmtime, strftime
 
 # Look for SpaceNavigator
@@ -33,14 +34,16 @@ print('')
 print('Exit by pressing any button on the SpaceMouse Pro')
 print('')
 
-# saving data to csv file
-filename = "mouse_log.csv"
+# saving data to csv file in specific directory
+filename = "forward_plusy_1.csv"
+savepath = '/home/pi/mouse_3d/space_mouse_data'
+Dir_and_Name = os.path.join(save_path, file_name)
 
 # Create header row in new CSV file
-csv = open(filename, 'w')
+csv = open(Dir_and_Name, 'w')
 csv.write("Timestamp,Tx,Ty,Tz,Rx,Ry,Rz\n")
 csv.close()
-csv = open(filename, 'a')
+csv = open(Dir_and_Name, 'a')
 
 run = True
 while run:
@@ -73,9 +76,8 @@ while run:
             print(" T: ",tx,ty,tz," R: ", rx, ry, rz)
             
             # Construct CSV entry from timestamp and mouse reading
-            waktu = str(datetime.now())
+            waktu = str(time.time())
             data_to_log = waktu + "," + str(tx) + "," + str(ty) + "," + str(tz) + "," + str(rx) + "," + str(ry) + "," + str(rz) + "\n"
-            print(data_to_log)
             
             # Log (append) entry into file
             csv.write(data_to_log)
@@ -96,7 +98,7 @@ if reattach:
 
 # show the csv and close it
 csv.close()
-csv = open(filename, 'r')
+csv = open(Dir_and_Name, 'r')
 print(csv.read())
 csv.close()
 
